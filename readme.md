@@ -14,6 +14,7 @@ Install Dependencies:
 
 After activating the virtual environment, install all the dependencies listed in requirements.txt by running:
     --> pip install -r requirements.txt
+    --> python -m spacy download en_core_web_sm
 
 
 Run Code:
