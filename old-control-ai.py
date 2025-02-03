@@ -3,15 +3,13 @@ from fastapi.responses import HTMLResponse
 from langchain.llms.base import LLM
 from langchain.memory import ConversationBufferMemory
 from langchain.prompts import PromptTemplate
-from langchain.chains.llm import LLMChain
+from langchain.chains import LLMChain
 from typing import Optional, List, Dict
 import g4f
 import requests
 import spacy
 import json
 import re
-
-
 # --- FastAPI Application ---
 app = FastAPI()
 
@@ -25,11 +23,9 @@ except OSError:
 connections = set()
 
 # Base API URL
-# BASE_URL = "https://v2.refresh.controlfms.com/"
-
+BASE_URL = "https://v2.refresh.controlfms.com/"
 # For UAT
-BASE_URL = "https://uat.refresh.controlfms.com/"
-
+#BASE_URL = "https://uat.refresh.controlfms.com/"
 
 
 # Global header for requests
@@ -38,27 +34,24 @@ HEADERS = {
 }
 
 # Global stage mapping
-# stage_mapping = {
-#     "Build Stage": "74f83310-878a-49f1-92c1-f3a759677080",
-#     "Working Drawings & Costing": "490436fb-5a1a-4357-bc9d-3693b8a89c24",
-#     "Project Closure": "d4ad2e6f-97f0-4aff-b3a3-69ff786302bb",
-#     "Lead In": "9db081ef-6281-489f-945e-b7d8ef487e4d",
-#     "Concept & Feasibility": "f2ea2be6-50ee-40f9-a316-9b5560fca7fb",
-#     "Initial Consultation": "d51ecf97-d6db-42c4-8cb0-bc055bb5f129"
-# }
-
-# For UAT
 stage_mapping = {
-    "Build Stage": "41706075-ce5b-4bd5-9790-b54d5d071919",
-    "Working Drawings & Costing": "fb16a546-af38-462d-8665-423d82c8ce10",
-    "Project Closure": "4546181e-b742-4eaa-b71b-eb15f51e0f71",
-    "Lead In": "8b3dafab-6f15-4a27-94b7-1ff67555eb91",
-    "Concept & Feasibility": "4ce04301-8f83-4ecb-9d7e-db4312b36139",
-    "Initial Consultation": "78850256-ef61-490e-9b91-d20ae2db7b43"
+    "Build Stage": "74f83310-878a-49f1-92c1-f3a759677080",
+    "Working Drawings & Costing": "490436fb-5a1a-4357-bc9d-3693b8a89c24",
+    "Project Closure": "d4ad2e6f-97f0-4aff-b3a3-69ff786302bb",
+    "Lead In": "9db081ef-6281-489f-945e-b7d8ef487e4d",
+    "Concept & Feasibility": "f2ea2be6-50ee-40f9-a316-9b5560fca7fb",
+    "Initial Consultation": "d51ecf97-d6db-42c4-8cb0-bc055bb5f129"
 }
 
-
-
+# For UAT
+#stage_mapping = {
+ #   "Build Stage": "41706075-ce5b-4bd5-9790-b54d5d071919",
+ #   "Working Drawings & Costing": "fb16a546-af38-462d-8665-423d82c8ce10",
+ #   "Project Closure": "4546181e-b742-4eaa-b71b-eb15f51e0f71",
+  #  "Lead In": "8b3dafab-6f15-4a27-94b7-1ff67555eb91",
+   # "Concept & Feasibility": "4ce04301-8f83-4ecb-9d7e-db4312b36139",
+    #"Initial Consultation": "78850256-ef61-490e-9b91-d20ae2db7b43"
+#}
 
 # Utility for API tools
 class CustomTool:
@@ -67,9 +60,9 @@ class CustomTool:
         self.api_endpoint = api_endpoint
         self.description = description
 
-    async def execute_get(self, context: Dict[str, str]) -> str:
+    def execute_get(self, context: Dict[str, str]) -> str:
         try:
-            response = await requests.get(self.api_endpoint, headers=HEADERS, params=context)
+            response = requests.get(self.api_endpoint, headers=HEADERS, params=context)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
@@ -77,9 +70,9 @@ class CustomTool:
         except ValueError as ve:
             return {"error": "Response could not be parsed as JSON. Details: {ve}"}
 
-    async def execute_post(self, data: Dict[str, str]) -> str:
+    def execute_post(self, data: Dict[str, str]) -> str:
         try:
-            response = await requests.post(self.api_endpoint, headers=HEADERS, json=data)
+            response = requests.post(self.api_endpoint, headers=HEADERS, json=data)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
@@ -87,9 +80,9 @@ class CustomTool:
         except ValueError as ve:
             return {"error": "Response could not be parsed as JSON. Details: {ve}"}
 
-    async def execute_put(self, data: Dict[str, str]) -> str:
+    def execute_put(self, data: Dict[str, str]) -> str:
         try:
-            response = await requests.put(self.api_endpoint, headers=HEADERS, json=data)
+            response = requests.put(self.api_endpoint, headers=HEADERS, json=data)
             response.raise_for_status()
             return response.json()
         except requests.exceptions.RequestException as e:
@@ -158,6 +151,7 @@ def move_to_initial_stage(data: Dict[str, str]) -> str:
         description="Move a project or deal or lead or job to the initial consultation stage.",
     )
     return tool.execute_post(data)
+
 def put_project_on_hold(data: Dict[str, str]) -> str:
     url = f"{BASE_URL}api/v13/deal/change-deal-status/onhold"
     tool = CustomTool(
@@ -213,9 +207,8 @@ class EducationalLLM(LLM):
         elif intent == "MOVE_TO_INITIAL_STAGE" or intent == "CHANGE_STAGE_OF_PROJECT":
             # Prompt user for required data
             alternative_id = input("Enter Project ID: ").strip()
-            # For UAT
-            stage_id = "8b3dafab-6f15-4a27-94b7-1ff67555eb91"
-            # stage_id = "9db081ef-6281-489f-945e-b7d8ef487e4d"  # Fixed value #
+            # stage_id = "8b3dafab-6f15-4a27-94b7-1ff67555eb91"
+            stage_id = "9db081ef-6281-489f-945e-b7d8ef487e4d"
             data = {"operation": {"ubiquity": False}, "alternative_id": alternative_id, "stage_id": stage_id}
             response = move_to_initial_stage(data)
             return json.dumps(response, indent=2) if isinstance(response, dict) else response
@@ -281,6 +274,8 @@ def detect_intent(user_query: str) -> str:
           messages=[{"role": "user", "content": prompt}],
           verbose=False,
       )
+
+
       print(f"Detected Intent from promt: {response}")  # Debugging
 
       matching_intents = [intent for intent in intent_list if intent in response]
@@ -311,9 +306,9 @@ prompt = PromptTemplate(
 )
 chain = LLMChain(llm=EducationalLLM(), prompt=prompt, memory=memory)
 
-async def process_user_query(user_input: str) -> str:
+def process_user_query(user_input: str) -> str:
     try:
-        response = await chain({"query": user_input})
+        response = chain({"query": user_input})
         return response["text"]
     except Exception as e:
         return f"An error occurred: {e}"
@@ -327,10 +322,10 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         # Step 1: Send a welcome message
         await websocket.send_text("I'm your Control Assistant, please tell me your query?")
-
+        
         # Step 2: Ask for the Cookie value
         await websocket.send_text("Please provide the value for the Cookie in JSON format: {'message': '<cookie_value>'}")
-
+        
         # Step 3: Receive the Cookie value from the client
         cookie_data = await websocket.receive_text()
         if cookie_data.strip().lower() == "exit":
@@ -345,7 +340,7 @@ async def websocket_endpoint(websocket: WebSocket):
             cookie_value = cookie_dict.get("message")
             if not cookie_value:
                 raise ValueError("Cookie value is missing in the provided JSON.")
-
+            
             # Update the global HEADERS
             global HEADERS
             HEADERS["Cookie"] = cookie_value
@@ -358,7 +353,7 @@ async def websocket_endpoint(websocket: WebSocket):
         except ValueError as e:
             await websocket.send_text(f"Error: {e}")
             return
-
+        
         # Step 6: Handle user queries in a loop
         while True:
             data = await websocket.receive_text()
@@ -371,7 +366,7 @@ async def websocket_endpoint(websocket: WebSocket):
                 break
 
             # Process the user query
-            response = await process_user_query(data)
+            response = process_user_query(data)
             await websocket.send_text(response)
 
     except WebSocketDisconnect:
