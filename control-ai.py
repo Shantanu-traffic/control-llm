@@ -164,15 +164,24 @@ def get_scope_by_aoh(area_of_house: str) -> dict:
 
 def get_bathroom_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('bathroom')
-    return data['stages'][stage]
+    return {
+        'data': data['stages'][stage],
+        'stage': stage
+    }
 
 def get_bedroom_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('bedroom')
-    return data['stages'][stage]
+    return {
+        'data': data['stages'][stage],
+        'stage': stage
+    }
 
 def get_basement_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('basement')
-    return data['stages'][stage]
+    return {
+        'data': data['stages'][stage],
+        'stage': stage
+    }
 
     
 
@@ -245,7 +254,7 @@ class EducationalLLM(LLM):
             return (
                 "CALL_FUNCTION: " +
                 json.dumps({
-                    "name": "get_pipeline_projects",
+                    "name": "process_stage_wise_counts",
                     "arguments": {'meta':True}
                 })
             )
@@ -408,7 +417,7 @@ async def function_calling_agent(query: str, websocket: WebSocket):
             final_prompt = prompt.format(history=memory.buffer, query=new_query)
             final_response_text = await chain.llm._acall(final_prompt)
             await stream_response(websocket, final_response_text)
-            await websocket.send_text(f"API Response: {json.dumps(function_result, indent=2)}")
+            await websocket.send_text(f"{json.dumps(function_result, indent=2)}")
         except Exception as e:
             await websocket.send_text(f"Error processing function call: {e}")
     else:
