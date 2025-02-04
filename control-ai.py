@@ -101,7 +101,7 @@ async def get_pipeline_projects(context: Dict[str, str]) -> dict:
     return await tool.execute_get(context)
 
 async def get_completed_activities(context: Dict[str, str]) -> dict:
-    url = f"{BASE_URL}api/v13/deal/manage-activities/master?date_completed=true&order_direction=desc"
+    url = f"{BASE_URL}api/v13/deal/manage-activities/master"
     tool = CustomTool(
         name="get_completed_activities",
         api_endpoint=url,
@@ -110,7 +110,7 @@ async def get_completed_activities(context: Dict[str, str]) -> dict:
     return await tool.execute_get(context)
 
 async def get_non_completed_activities(context: Dict[str, str]) -> dict:
-    url = f"{BASE_URL}api/v13/deal/manage-activities/master?order_direction=desc"
+    url = f"{BASE_URL}api/v13/deal/manage-activities/master"
     tool = CustomTool(
         name="get_non_completed_activities",
         api_endpoint=url,
@@ -119,7 +119,7 @@ async def get_non_completed_activities(context: Dict[str, str]) -> dict:
     return await tool.execute_get(context)
 
 async def get_completed_projects(context: Dict[str, str]) -> dict:
-    url = f"{BASE_URL}api/v13/deal/lists/completed/master?page_size=25&order_direction=desc&order_by=date_completed"
+    url = f"{BASE_URL}api/v13/deal/lists/completed/master"
     tool = CustomTool(
         name="get_completed_projects",
         api_endpoint=url,
@@ -143,7 +143,6 @@ async def put_project_on_hold(data: Dict[str, str]) -> dict:
         api_endpoint=url,
         description="Put a project (or deal/lead/job) on hold.",
     )
-    print(f"exec put::  {data}")
     return await tool.execute_put(data)
 
 def process_stage_wise_counts(meta_data: List[Dict[str, str]]) -> str:
@@ -155,6 +154,27 @@ def process_stage_wise_counts(meta_data: List[Dict[str, str]]) -> str:
         count = next((item["count"] for item in meta_data if item["stage_id"] == stage_id), "0")
         stage_counts.append(f"{stage_name}: {count}")
     return "\n".join(stage_counts)
+
+def get_scope_by_aoh(area_of_house: str) -> dict:
+    with open('data.json', 'r') as file:
+        data = json.load(file)
+    
+    return data[area_of_house]
+    
+
+def get_bathroom_scopes(stage: str) -> dict:
+    data = get_scope_by_aoh('bathroom')
+    return data['stages'][stage]
+
+def get_bedroom_scopes(stage: str) -> dict:
+    data = get_scope_by_aoh('bedroom')
+    return data['stages'][stage]
+
+def get_basement_scopes(stage: str) -> dict:
+    data = get_scope_by_aoh('basement')
+    return data['stages'][stage]
+
+    
 
 # --- Entity Extraction Utility ---
 def extract_entities(user_input: str) -> List[tuple]:
@@ -180,7 +200,6 @@ class EducationalLLM(LLM):
         match = re.search(r"Conversation History:(.*?)User Query:(.+)", prompt, re.S)
         conversation_history = match.group(1).strip() if match else ""
         user_query = match.group(2).strip() if match else ""
-        print(f"_call user query:: {user_query}")
 
         # Simple (simulated) intent detection based on keywords:
         if "pipeline" in user_query.lower():
@@ -198,7 +217,7 @@ class EducationalLLM(LLM):
                 "CALL_FUNCTION: " +
                 json.dumps({
                     "name": "get_completed_activities",
-                    "arguments": {}
+                    "arguments": {'date_completed':True, 'order_direction':'desc'}
                 })
             )
         elif "on hold" in user_query.lower():
@@ -226,8 +245,48 @@ class EducationalLLM(LLM):
             return (
                 "CALL_FUNCTION: " +
                 json.dumps({
-                    "name": "process_stage_wise_counts",
+                    "name": "get_pipeline_projects",
                     "arguments": {'meta':True}
+                })
+            )
+        elif "completed projects" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "get_completed_projects",
+                    "arguments": {'page_size':25, 'order_direction':'desc', 'order_by':'date_completed'}
+                })
+            )
+        elif "non-completed activities" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "get_non_completed_activities",
+                    "arguments": {'order_direction':'desc'}
+                })
+            )
+        elif "bathroom" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "get_bathroom_scopes",
+                    "arguments": {}
+                })
+            )
+        elif "bedroom" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "get_bedroom_scopes",
+                    "arguments": {}
+                })
+            )
+        elif "basement" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "get_basement_scopes",
+                    "arguments": {}
                 })
             )
         # Fallback: general answer (could use general knowledge here)
@@ -279,7 +338,7 @@ async def function_calling_agent(query: str, websocket: WebSocket):
     full_prompt = prompt.format(history=conversation_context, query=query)
     # Get initial response from the LLM (using our async wrapper)
     initial_response_text = await chain.llm._acall(full_prompt)
-    print(f"init resp {initial_response_text}")
+    # print(f"init resp {initial_response_text}")
     
     # Check if the response instructs to call a function
     if initial_response_text.startswith("CALL_FUNCTION:"):
@@ -289,9 +348,6 @@ async def function_calling_agent(query: str, websocket: WebSocket):
             function_call_data = json.loads(function_call_str)
             function_name = function_call_data.get("name")
             function_args = function_call_data.get("arguments", {})
-            
-            print(f"fn name::{function_name}")
-            print(f"fn args::{function_args}")
 
             # Based on the function name, call the corresponding API function
             if function_name == "get_pipeline_projects":
@@ -304,16 +360,8 @@ async def function_calling_agent(query: str, websocket: WebSocket):
                 function_result = await get_completed_projects(function_args)
             elif function_name == "process_stage_wise_counts":
                 api_response = await get_pipeline_projects(function_args)
-                # json_str = json.dumps(api_response, indent=4)
-
-                # # Print the pretty-printed JSON string
-                # # print(json_str)
-                # print(f"api response::  {json_str}")
                 meta_data = api_response["data"]["meta"]
-                # json_str = json.dumps(meta_data, indent=4)
-                print(f"api response::  {type(meta_data)}")
-                # for key in meta_data.keys():
-                #     print(key)
+
                 # Call the processing function
                 final_response = process_stage_wise_counts(meta_data)
                 function_result = json.dumps(final_response, indent=2) if isinstance(final_response, dict) else final_response
@@ -329,12 +377,25 @@ async def function_calling_agent(query: str, websocket: WebSocket):
             elif function_name == "put_project_on_hold":
                 await websocket.send_text("Please provide the Deal ID:")
                 alternative_id = (await websocket.receive_text()).strip()
-                print(1)
                 await websocket.send_text("Please provide the On-Hold Review Date (YYYY-MM-DD):")
                 review_date = (await websocket.receive_text()).strip() + "T18:30:00.000Z"
-                print(2)
                 function_args = {"alternative_id": alternative_id, "onhold_review_date": review_date}
                 function_result = await put_project_on_hold(function_args)
+            elif function_name == "get_bathroom_scopes":
+                await websocket.send_text("Please provide the stage:")
+                stage = (await websocket.receive_text()).strip()
+                function_args = stage
+                function_result = get_bathroom_scopes(function_args)
+            elif function_name == "get_bedroom_scopes":
+                await websocket.send_text("Please provide the stage:")
+                stage = (await websocket.receive_text()).strip()
+                function_args = stage
+                function_result = get_bedroom_scopes(function_args)
+            elif function_name == "get_basement_scopes":
+                await websocket.send_text("Please provide the stage:")
+                stage = (await websocket.receive_text()).strip()
+                function_args = stage
+                function_result = get_basement_scopes(function_args)
             else:
                 await websocket.send_text("Unknown function call requested.")
                 return
