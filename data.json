@@ -1,0 +1,694 @@
+{
+  "bathroom": {
+    "stages": {
+      "concept": [
+        {
+          "itemName": "Assess current layout, plumbing, and electrical systems",
+          "desc": [
+            {
+              "spec": "Conduct an inspection of the existing plumbing and electrical setup.",
+              "desc": "Identify potential issues that may need to be addressed during the renovation."
+            }
+          ],
+          "trade_type": "Building inspection"
+        },
+        {
+          "itemName": "Measure the space for new fixtures (toilet, sink, bathtub/shower, etc.)",
+          "desc": [
+            {
+              "spec": "Accurately measure all dimensions of the bathroom.",
+              "desc": "Ensure the placement of new fixtures is feasible within the space."
+            }
+          ],
+          "trade_type": "Building"
+        },
+        {
+          "itemName": "Choose a design style (modern, traditional, contemporary, etc.)",
+          "desc": [
+            {
+              "spec": "Select a style that complements the rest of the house.",
+              "desc": "This will guide choices for tiles, colors, fixtures, and overall design."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Plan the selection of materials (tiles, paint, vanity, fixtures)",
+          "desc": [
+            {
+              "spec": "Decide on materials for each part of the bathroom.",
+              "desc": "Consider durability, aesthetic appeal, and budget."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Confirm color scheme and finishes",
+          "desc": [
+            {
+              "spec": "Finalize paint colors, tile choices, and finish materials.",
+              "desc": "Ensure all finishes align with the chosen design style."
+            }
+          ],
+          "trade_type": "Design"
+        }
+      ],
+      "working": [
+        {
+          "itemName": "Create a draft for the bathroom tiles and structure",
+          "desc": [
+            {
+              "spec": "Draft a detailed layout of the tile design and structure arrangement.",
+              "desc": "Ensure all elements fit together aesthetically and functionally."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Assign tasks to team members.",
+          "desc": [
+            {
+              "spec": "Delegate responsibilities to relevant team members.",
+              "desc": "Coordinate efforts among different trades (plumbers, electricians, tilers, etc.)."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Monitor progress and adjust plans as needed.",
+          "desc": [
+            {
+              "spec": "Track the progress of tasks according to schedule.",
+              "desc": "Make adjustments to the plan if any issues arise or delays occur."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Ensure quality control and adherence to standards.",
+          "desc": [
+            {
+              "spec": "Inspect completed work for quality and accuracy.",
+              "desc": "Ensure work follows construction codes and safety regulations."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Develop detailed technical drawings and schematics.",
+          "desc": [
+            {
+              "spec": "Produce precise, scaled drawings for the bathroom layout.",
+              "desc": "Include electrical wiring, plumbing, and fixture placements."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Prepare final drawing packages for approval and distribution.",
+          "desc": [
+            {
+              "spec": "Final drafts of technical documents are created for approval.",
+              "desc": "Prepare drawings and schedules for contractors and approvals."
+            }
+          ],
+          "trade_type": "Project management"
+        }
+      ],
+      "build": [
+        {
+          "itemName": "Shut off water and electricity supply to the bathroom.",
+          "desc": [
+            {
+              "spec": "Ensure the water and power systems are completely disconnected.",
+              "desc": "This is crucial for safety before beginning work."
+            }
+          ],
+          "trade_type": "Plumbing"
+        },
+        {
+          "itemName": "Remove old fixtures: toilet, sink, bathtub, showerhead, faucets.",
+          "desc": [
+            {
+              "spec": "Carefully remove old fixtures to avoid damage to plumbing or electrical systems.",
+              "desc": "Ensure proper disposal of old materials."
+            }
+          ],
+          "trade_type": "Demolition"
+        },
+        {
+          "itemName": "Take down existing tiles, wallpaper, or wall coverings.",
+          "desc": [
+            {
+              "spec": "Remove all existing finishes to expose the underlying structure.",
+              "desc": "Prepare walls and floors for new installation."
+            }
+          ],
+          "trade_type": "Tiling"
+        },
+        {
+          "itemName": "Relocate or install new plumbing lines for toilet, sink, shower/bathtub, and other fixtures.",
+          "desc": [
+            {
+              "spec": "Install plumbing according to the new bathroom layout.",
+              "desc": "Ensure proper water flow and drainage."
+            }
+          ],
+          "trade_type": "Plumbing"
+        },
+        {
+          "itemName": "Install new drains and water supply lines as required by the new layout.",
+          "desc": [
+            {
+              "spec": "Install drains, water supply lines, and ensure they align with the new fixture locations.",
+              "desc": "Test for leaks and functionality."
+            }
+          ],
+          "trade_type": "Plumbing"
+        },
+        {
+          "itemName": "Re-wire the bathroom for new lighting, outlets, and ventilation fan.",
+          "desc": [
+            {
+              "spec": "Install new electrical wiring and outlets.",
+              "desc": "Ensure the bathroom is up to code with modern electrical systems."
+            }
+          ],
+          "trade_type": "Electrical"
+        },
+        {
+          "itemName": "Install any necessary electrical switches, outlets, and GFCIs (ground fault circuit interrupter) as required.",
+          "desc": [
+            {
+              "spec": "Ensure all electrical points meet safety standards.",
+              "desc": "Install GFCIs in wet areas for safety."
+            }
+          ],
+          "trade_type": "Electrical"
+        },
+        {
+          "itemName": "Install or reposition any plumbing vents, drains, or gas lines.",
+          "desc": [
+            {
+              "spec": "Make adjustments to the plumbing system if needed.",
+              "desc": "Ensure proper venting and drainage."
+            }
+          ],
+          "trade_type": "Plumbing"
+        },
+        {
+          "itemName": "Install cement board or waterproof backer board in areas where tile will be installed (walls of tub/shower).",
+          "desc": [
+            {
+              "spec": "Install waterproof materials to ensure tiles stick and resist water damage.",
+              "desc": "This is particularly important in high-moisture areas."
+            }
+          ],
+          "trade_type": "Waterproofing"
+        },
+        {
+          "itemName": "Apply waterproofing membrane or sealant in the shower and tub areas.",
+          "desc": [
+            {
+              "spec": "Apply waterproofing layers to ensure water doesn’t damage the structure.",
+              "desc": "Focus on shower and bathtub areas."
+            }
+          ],
+          "trade_type": "Waterproofing"
+        },
+        {
+          "itemName": "Lay a new subfloor if needed, ensuring it is level and stable.",
+          "desc": [
+            {
+              "spec": "Ensure the subfloor is solid and level before proceeding with other flooring installations.",
+              "desc": "Fix any structural issues in the floor."
+            }
+          ],
+          "trade_type": "General Contractor"
+        },
+        {
+          "itemName": "Install underlayment if using tile or other flooring that requires it.",
+          "desc": [
+            {
+              "spec": "Install underlayment as per the manufacturer’s guidelines.",
+              "desc": "Ensure the underlayment is properly aligned and secured."
+            }
+          ],
+          "trade_type": "Tiling"
+        },
+        {
+          "itemName": "If using non-tile flooring (e.g., vinyl, luxury vinyl plank, or wood-look tiles), install per manufacturer guidelines.",
+          "desc": [
+            {
+              "spec": "Install alternative flooring such as vinyl or wood-look tiles.",
+              "desc": "Ensure adherence to the product’s installation guidelines."
+            }
+          ],
+          "trade_type": "Flooring"
+        }
+      ]
+    }
+  },
+
+  "bedroom": {
+    "stages": {
+      "concept": [
+        {
+          "itemName": "Assess current layout, electrical, and lighting systems",
+          "desc": [
+            {
+              "spec": "Conduct an inspection of the existing bedroom layout and electrical systems.",
+              "desc": "Ensure the layout fits the needs of the room while identifying potential electrical issues."
+            }
+          ],
+          "trade_type": "Building inspection"
+        },
+        {
+          "itemName": "Measure the space for new furniture and fixtures (bed, dresser, nightstands, etc.)",
+          "desc": [
+            {
+              "spec": "Accurately measure the available space for the new furniture pieces.",
+              "desc": "Ensure there is ample space for the planned items while maintaining comfortable movement in the room."
+            }
+          ],
+          "trade_type": "Building"
+        },
+        {
+          "itemName": "Choose a design style (modern, traditional, contemporary, etc.)",
+          "desc": [
+            {
+              "spec": "Select a cohesive design theme that matches the homeowner’s preferences.",
+              "desc": "This will guide the choice of furniture, wall color, and decor."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Plan the selection of materials (flooring, paint, furniture, window treatments, etc.)",
+          "desc": [
+            {
+              "spec": "Choose appropriate materials such as flooring, paint colors, and furniture.",
+              "desc": "Ensure the materials selected suit the chosen style and budget."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Confirm color scheme and finishes",
+          "desc": [
+            {
+              "spec": "Finalize the color scheme for walls, furniture, and accents.",
+              "desc": "Choose finishes for furniture and flooring that complement the overall design."
+            }
+          ],
+          "trade_type": "Design"
+        }
+      ],
+      "working": [
+        {
+          "itemName": "Create a draft for the room layout and furniture arrangement",
+          "desc": [
+            {
+              "spec": "Design a layout that maximizes space and fits the furniture.",
+              "desc": "Ensure the furniture arrangement is both functional and aesthetically pleasing."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Assign tasks to team members.",
+          "desc": [
+            {
+              "spec": "Delegate responsibilities for tasks such as furniture installation, painting, and electrical work.",
+              "desc": "Coordinate efforts to ensure the project stays on schedule."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Monitor progress and adjust plans as needed.",
+          "desc": [
+            {
+              "spec": "Track the status of the renovation and ensure that tasks are completed on time.",
+              "desc": "Adjust plans as needed to address unexpected issues."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Ensure quality control and adherence to standards.",
+          "desc": [
+            {
+              "spec": "Check the quality of work regularly.",
+              "desc": "Ensure everything meets the required standards and specifications."
+            }
+          ],
+          "trade_type": "Project management"
+        },
+        {
+          "itemName": "Develop detailed technical drawings and schematics.",
+          "desc": [
+            {
+              "spec": "Create precise drawings for the room layout, including furniture placement and any electrical or lighting work.",
+              "desc": "Provide clear visual guidelines for the construction and installation teams."
+            }
+          ],
+          "trade_type": "Design"
+        },
+        {
+          "itemName": "Prepare final drawing packages for approval and distribution.",
+          "desc": [
+            {
+              "spec": "Finalize the drawings for the project, including all necessary details and specifications.",
+              "desc": "Submit the package for approval and distribute it to the team members."
+            }
+          ],
+          "trade_type": "Project management"
+        }
+      ],
+      "build": [
+        {
+          "itemName": "Shut off electrical supply to the bedroom if needed.",
+          "desc": [
+            {
+              "spec": "Ensure that the power supply is turned off before starting any electrical work.",
+              "desc": "Safety is crucial when working with electrical systems."
+            }
+          ],
+          "trade_type": "Electrical"
+        },
+        {
+          "itemName": "Remove existing furniture and fixtures.",
+          "desc": [
+            {
+              "spec": "Carefully remove any existing furniture or fixtures that are being replaced.",
+              "desc": "Ensure that items are properly disposed of or stored if needed."
+            }
+          ],
+          "trade_type": "Demolition"
+        },
+        {
+          "itemName": "Take down old wall coverings or paint.",
+          "desc": [
+            {
+              "spec": "Remove any old wallpaper or paint that may be outdated.",
+              "desc": "Prepare the walls for new paint or wall coverings."
+            }
+          ],
+          "trade_type": "Painting"
+        },
+        {
+          "itemName": "Install new electrical outlets, switches, and light fixtures.",
+          "desc": [
+            {
+              "spec": "Install new electrical outlets and light fixtures as per the new room layout.",
+              "desc": "Ensure all installations meet local building codes and safety standards."
+            }
+          ],
+          "trade_type": "Electrical"
+        },
+        {
+          "itemName": "Install new flooring (hardwood, carpet, laminate, etc.)",
+          "desc": [
+            {
+              "spec": "Install the chosen flooring type according to manufacturer guidelines.",
+              "desc": "Ensure the floor is level and properly installed."
+            }
+          ],
+          "trade_type": "Flooring"
+        },
+        {
+          "itemName": "Paint the walls and ceiling with the selected color scheme.",
+          "desc": [
+            {
+              "spec": "Apply a fresh coat of paint to the walls and ceiling.",
+              "desc": "Ensure even coverage and no visible streaks."
+            }
+          ],
+          "trade_type": "Painting"
+        },
+        {
+          "itemName": "Install new furniture (bed, dresser, nightstands, etc.)",
+          "desc": [
+            {
+              "spec": "Assemble and arrange the new furniture in the room as per the layout.",
+              "desc": "Ensure all furniture is securely placed and aligned."
+            }
+          ],
+          "trade_type": "Cabinet making / joinery"
+        },
+        {
+          "itemName": "Install window treatments (curtains, blinds, etc.)",
+          "desc": [
+            {
+              "spec": "Hang new curtains or install blinds as per the selected design.",
+              "desc": "Ensure the treatments fit the windows properly and are easy to use."
+            }
+          ],
+          "trade_type": "Miscellaneous"
+        },
+        {
+          "itemName": "Install new light fixtures and ceiling fans if applicable.",
+          "desc": [
+            {
+              "spec": "Install light fixtures or ceiling fans to provide sufficient lighting and comfort.",
+              "desc": "Ensure proper installation and functionality."
+            }
+          ],
+          "trade_type": "Electrical"
+        },
+        {
+          "itemName": "Final touch-ups (decor items, artwork, mirrors, etc.)",
+          "desc": [
+            {
+              "spec": "Add final decorative items such as artwork, mirrors, and accessories.",
+              "desc": "Ensure the room is styled according to the design scheme."
+            }
+          ],
+          "trade_type": "Painting"
+        }
+      ]
+    }
+  },
+
+  "basement": {
+    "stages": {
+      "concept": [
+        {
+          "itemName": "Assess current layout, foundation, plumbing, and electrical systems",
+          "desc": [
+            {
+              "spec": "Evaluate the existing condition of the basement including foundation integrity, plumbing, and electrical systems.",
+              "desc": "Check for any issues related to waterproofing, plumbing, and electrical needs before proceeding."
+            }
+          ],
+          "trade_type": ["Engineering", "Plumbing", "Electrical"]
+        },
+        {
+          "itemName": "Measure the space for planned use (living area, storage, home office, etc.)",
+          "desc": [
+            {
+              "spec": "Measure the basement space to allocate areas for various functions (living space, storage, office, etc.).",
+              "desc": "Ensure the layout maximizes the space while allowing for practical room divisions."
+            }
+          ],
+          "trade_type": ["General Contractor"]
+        },
+        {
+          "itemName": "Choose a design style (modern, rustic, industrial, etc.)",
+          "desc": [
+            {
+              "spec": "Pick a design style that suits the intended use of the basement.",
+              "desc": "Consider materials and finishes that will work in a basement environment, like moisture-resistant products."
+            }
+          ],
+          "trade_type": ["Design"]
+        },
+        {
+          "itemName": "Plan the selection of materials (flooring, drywall, insulation, lighting, fixtures, etc.)",
+          "desc": [
+            {
+              "spec": "Select materials suitable for the basement environment, such as moisture-resistant flooring, insulation, and lighting.",
+              "desc": "Ensure all materials chosen are appropriate for basement conditions and provide a comfortable living space."
+            }
+          ],
+          "trade_type": ["Supplier", "Design"]
+        },
+        {
+          "itemName": "Confirm color scheme and finishes",
+          "desc": [
+            {
+              "spec": "Finalize the color scheme for walls, flooring, and finishes.",
+              "desc": "Ensure colors are cohesive and contribute to the desired atmosphere in the basement."
+            }
+          ],
+          "trade_type": ["Design"]
+        }
+      ],
+      "working": [
+        {
+          "itemName": "Create a draft for the basement layout and design",
+          "desc": [
+            {
+              "spec": "Design a detailed layout that incorporates the intended use of the basement space.",
+              "desc": "Ensure the plan accommodates necessary functions like plumbing, electrical, and HVAC systems."
+            }
+          ],
+          "trade_type": ["Design", "Engineering"]
+        },
+        {
+          "itemName": "Assign tasks to team members.",
+          "desc": [
+            {
+              "spec": "Delegate responsibilities for each phase of the basement renovation (plumbing, electrical, flooring, etc.).",
+              "desc": "Ensure the project progresses efficiently by assigning the right experts to each task."
+            }
+          ],
+          "trade_type": ["Project management"]
+        },
+        {
+          "itemName": "Monitor progress and adjust plans as needed.",
+          "desc": [
+            {
+              "spec": "Check on the progress of work regularly and adjust schedules or plans if issues arise.",
+              "desc": "Make sure the renovation stays on track, considering potential setbacks."
+            }
+          ],
+          "trade_type": ["Project management"]
+        },
+        {
+          "itemName": "Ensure quality control and adherence to standards.",
+          "desc": [
+            {
+              "spec": "Regularly inspect the work to ensure it meets quality standards and safety codes.",
+              "desc": "Perform quality checks at various stages of the renovation."
+            }
+          ],
+          "trade_type": ["Project management", "Building inspection"]
+        },
+        {
+          "itemName": "Develop detailed technical drawings and schematics.",
+          "desc": [
+            {
+              "spec": "Create comprehensive technical drawings and schematics for plumbing, electrical, and layout planning.",
+              "desc": "Ensure all systems (HVAC, plumbing, and electrical) are mapped out clearly for proper installation."
+            }
+          ],
+          "trade_type": ["Design", "Engineering"]
+        },
+        {
+          "itemName": "Prepare final drawing packages for approval and distribution.",
+          "desc": [
+            {
+              "spec": "Finalize the drawing packages, ensuring all necessary details are included.",
+              "desc": "Submit the drawings for approval and distribute them to the relevant contractors and team members."
+            }
+          ],
+          "trade_type": ["Project management", "Design"]
+        }
+      ],
+      "build": [
+        {
+          "itemName": "Shut off electrical supply to the basement and any water lines if necessary.",
+          "desc": [
+            {
+              "spec": "Turn off the electricity and any water supply lines to prevent accidents during work.",
+              "desc": "Ensure the area is safe for construction and installation."
+            }
+          ],
+          "trade_type": ["Electrical", "Plumbing"]
+        },
+        {
+          "itemName": "Remove any existing materials (flooring, drywall, etc.)",
+          "desc": [
+            {
+              "spec": "Take out any old flooring, drywall, or other materials that will be replaced.",
+              "desc": "Ensure proper disposal of materials according to local regulations."
+            }
+          ],
+          "trade_type": ["Demolition"]
+        },
+        {
+          "itemName": "Install new insulation and vapor barriers if necessary.",
+          "desc": [
+            {
+              "spec": "Install proper insulation and vapor barriers to ensure temperature control and prevent moisture buildup.",
+              "desc": "This is especially important for basement environments prone to dampness."
+            }
+          ],
+          "trade_type": ["Insulation"]
+        },
+        {
+          "itemName": "Re-route plumbing if needed, or install new plumbing lines for wet areas (e.g., bathroom, wet bar, etc.)",
+          "desc": [
+            {
+              "spec": "Install any necessary plumbing lines for new fixtures, such as a bathroom or wet bar.",
+              "desc": "Ensure plumbing is installed to code and correctly routed."
+            }
+          ],
+          "trade_type": ["Plumbing"]
+        },
+        {
+          "itemName": "Install new electrical outlets, light fixtures, and circuits.",
+          "desc": [
+            {
+              "spec": "Install new outlets, lighting fixtures, and any additional circuits for the basement.",
+              "desc": "Ensure that electrical work meets local building codes and regulations."
+            }
+          ],
+          "trade_type": ["Electrical"]
+        },
+        {
+          "itemName": "Install flooring (carpet, laminate, tile, etc.)",
+          "desc": [
+            {
+              "spec": "Install the chosen flooring material, such as carpet, laminate, or tile.",
+              "desc": "Ensure the floor is level and all pieces are correctly fitted."
+            }
+          ],
+          "trade_type": ["Flooring"]
+        },
+        {
+          "itemName": "Install drywall and finish seams.",
+          "desc": [
+            {
+              "spec": "Install new drywall and finish the seams for smooth walls.",
+              "desc": "Ensure drywall is properly secured and finished."
+            }
+          ],
+          "trade_type": ["Plaster board and plastering"]
+        },
+        {
+          "itemName": "Paint walls and ceiling with chosen color scheme.",
+          "desc": [
+            {
+              "spec": "Apply paint to walls and ceiling with the selected color scheme.",
+              "desc": "Ensure the paint is applied evenly and dried properly."
+            }
+          ],
+          "trade_type": ["Painting"]
+        },
+        {
+          "itemName": "Install doors, trim, and any additional carpentry.",
+          "desc": [
+            {
+              "spec": "Install doors, trim, and any other custom carpentry work for the basement.",
+              "desc": "Ensure all doors and trims are properly installed and aligned."
+            }
+          ],
+          "trade_type": ["Cabinet making / joinery"]
+        },
+        {
+          "itemName": "Final touch-ups (decor, furniture, appliances, etc.)",
+          "desc": [
+            {
+              "spec": "Add final touches, such as furniture, appliances, or decor items.",
+              "desc": "Ensure the space is functional and styled according to the design."
+            }
+          ],
+          "trade_type": ["Design"]
+        }
+      ]
+    }
+  }
+}
