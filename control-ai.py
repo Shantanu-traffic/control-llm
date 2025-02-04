@@ -166,21 +166,24 @@ def get_bathroom_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('bathroom')
     return {
         'data': data['stages'][stage],
-        'stage': stage
+        'stage': stage,
+        'area_of_house': 'bathroom'
     }
 
 def get_bedroom_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('bedroom')
     return {
         'data': data['stages'][stage],
-        'stage': stage
+        'stage': stage,
+        'area_of_house': 'bedroom'
     }
 
 def get_basement_scopes(stage: str) -> dict:
     data = get_scope_by_aoh('basement')
     return {
         'data': data['stages'][stage],
-        'stage': stage
+        'stage': stage,
+        'area_of_house': 'basement'
     }
 
     
