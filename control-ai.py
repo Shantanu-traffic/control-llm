@@ -30,6 +30,7 @@ connections = set()
 
 # For UAT – you can change BASE_URL as needed
 BASE_URL = "https://v2.refresh.controlfms.com/"
+# BASE_URL = "http://localhost:3200/"
 
 # Global headers; the Cookie header will be updated from the client
 HEADERS = {
@@ -142,6 +143,7 @@ async def put_project_on_hold(data: Dict[str, str]) -> dict:
         api_endpoint=url,
         description="Put a project (or deal/lead/job) on hold.",
     )
+    print(f"exec put::  {data}")
     return await tool.execute_put(data)
 
 def process_stage_wise_counts(meta_data: List[Dict[str, str]]) -> str:
@@ -178,6 +180,7 @@ class EducationalLLM(LLM):
         match = re.search(r"Conversation History:(.*?)User Query:(.+)", prompt, re.S)
         conversation_history = match.group(1).strip() if match else ""
         user_query = match.group(2).strip() if match else ""
+        print(f"_call user query:: {user_query}")
 
         # Simple (simulated) intent detection based on keywords:
         if "pipeline" in user_query.lower():
@@ -201,7 +204,32 @@ class EducationalLLM(LLM):
         elif "on hold" in user_query.lower():
             # Here we assume the user did not provide required information.
             # The agent asks for missing information.
-            return "It seems you want to put a project on hold. Please provide the Deal ID and On-Hold Review Date (YYYY-MM-DD)."
+            # return "It seems you want to put a project on hold. Please provide the Deal ID and On-Hold Review Date (YYYY-MM-DD)."
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "put_project_on_hold",
+                    "arguments": {}
+                })
+            )
+        elif "to initial consultation" in user_query.lower():
+            # Here we assume the user did not provide required information.
+            # The agent asks for missing information.
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "move_to_initial_stage",
+                    "arguments": {}
+                })
+            )
+        elif "stage" in user_query.lower():
+            return (
+                "CALL_FUNCTION: " +
+                json.dumps({
+                    "name": "process_stage_wise_counts",
+                    "arguments": {'meta':True}
+                })
+            )
         # Fallback: general answer (could use general knowledge here)
         return "I'm sorry, I couldn't understand your query. Could you please rephrase it?"
 
@@ -251,6 +279,7 @@ async def function_calling_agent(query: str, websocket: WebSocket):
     full_prompt = prompt.format(history=conversation_context, query=query)
     # Get initial response from the LLM (using our async wrapper)
     initial_response_text = await chain.llm._acall(full_prompt)
+    print(f"init resp {initial_response_text}")
     
     # Check if the response instructs to call a function
     if initial_response_text.startswith("CALL_FUNCTION:"):
@@ -260,6 +289,9 @@ async def function_calling_agent(query: str, websocket: WebSocket):
             function_call_data = json.loads(function_call_str)
             function_name = function_call_data.get("name")
             function_args = function_call_data.get("arguments", {})
+            
+            print(f"fn name::{function_name}")
+            print(f"fn args::{function_args}")
 
             # Based on the function name, call the corresponding API function
             if function_name == "get_pipeline_projects":
@@ -270,6 +302,21 @@ async def function_calling_agent(query: str, websocket: WebSocket):
                 function_result = await get_non_completed_activities(function_args)
             elif function_name == "get_completed_projects":
                 function_result = await get_completed_projects(function_args)
+            elif function_name == "process_stage_wise_counts":
+                api_response = await get_pipeline_projects(function_args)
+                # json_str = json.dumps(api_response, indent=4)
+
+                # # Print the pretty-printed JSON string
+                # # print(json_str)
+                # print(f"api response::  {json_str}")
+                meta_data = api_response["data"]["meta"]
+                # json_str = json.dumps(meta_data, indent=4)
+                print(f"api response::  {type(meta_data)}")
+                # for key in meta_data.keys():
+                #     print(key)
+                # Call the processing function
+                final_response = process_stage_wise_counts(meta_data)
+                function_result = json.dumps(final_response, indent=2) if isinstance(final_response, dict) else final_response
             elif function_name == "move_to_initial_stage":
                 # For demonstration, we simulate prompting for missing data.
                 # In practice, you might send a message to the user requesting this info.
@@ -282,8 +329,10 @@ async def function_calling_agent(query: str, websocket: WebSocket):
             elif function_name == "put_project_on_hold":
                 await websocket.send_text("Please provide the Deal ID:")
                 alternative_id = (await websocket.receive_text()).strip()
+                print(1)
                 await websocket.send_text("Please provide the On-Hold Review Date (YYYY-MM-DD):")
                 review_date = (await websocket.receive_text()).strip() + "T18:30:00.000Z"
+                print(2)
                 function_args = {"alternative_id": alternative_id, "onhold_review_date": review_date}
                 function_result = await put_project_on_hold(function_args)
             else:
